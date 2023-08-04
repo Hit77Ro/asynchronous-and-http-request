@@ -61,7 +61,6 @@ const render = function (data, className = "") {
     .forEach((el) => lazyLoader.observe(el));
 };
 
-
 // creating an http request that will be made after a previous http request if succeded
 function getJson(url, msg) {
   return fetch(url).then((response) => {
@@ -81,13 +80,13 @@ function getData(name) {
       const [infos] = data;
       render(infos);
 
-      const [neighbor] = infos.borders;
+      // const [neighbor] = infos.borders;
 
       // no nieghbor the then function not gonna return  ; it will  return the resut of getJson()  ;
       // to fix that we shoud throw an error to terminate immediatly the then  function (rejected) => error will be catched by Catch method
       // if (!neighbor) return; // for reference
 
-      if (!neighbor) throw new Error("the country has no neighbors");
+      if (!infos.borders) throw new Error("the country has no neighbors");
 
       return getJson(
         `https://restcountries.com/v3.1/alpha/${neighbor}`,
